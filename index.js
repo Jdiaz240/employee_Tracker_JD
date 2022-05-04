@@ -1,5 +1,6 @@
 const { prompt } = require("inquirer");
-const db = require("./");
+const db = require("./db");
+const { findDepartment } = require("./db");
 require("console.table");
 
 function mainMenu() {
@@ -56,7 +57,7 @@ function mainMenu() {
 //}
 
 function viewEmployees() {
-    db.findAllEmployees()
+    db.findEmployees()
     .then(([rows]) => {
         let employees = rows;
         console.log("\n");
@@ -64,8 +65,33 @@ function viewEmployees() {
     })
     .then(() => mainMenu());
 }
+function viewDepartments() {
+    db.findDepartments()
+    .then(([rows]) => {
+        let departments = rows;
+        console.log("\n");
+        console.table(departments)
+    })
+    .then(() => mainMenu());
+}
+function viewRoles() {
+    db.findRoles()
+    .then(([rows]) => {
+        let roles = rows;
+        console.log("\n");
+        console.table(roles)
+    })
+    .then(() => mainMenu());
+}
+
 
 function quit() {
     console.log("Goodbye"),
     process.exit();
 };
+
+const init = () => {
+    mainMenu()
+}
+
+init()
