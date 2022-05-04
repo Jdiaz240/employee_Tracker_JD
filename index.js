@@ -1,6 +1,6 @@
 const { prompt } = require("inquirer");
 const db = require("./db");
-const { findDepartment } = require("./db");
+const { findDepartment, connection } = require("./db");
 require("console.table");
 
 function mainMenu() {
@@ -40,14 +40,36 @@ function mainMenu() {
                 }
             ]
         }
-    ]).then(res => {
-        let choices = res.choices;
-        //now we call the appropriate function depending on what the user chooses
-        //how would we organize this?
+    ])
+    .then(function (answer) {
+        console.log(answer.choice);
+        switch(answer.choice) {
+            case "VIEW_EMPLOYEE":
+                viewEmployees();
+                break;
+            case "VIEW_DEPARTMENTS":
+                viewDepartments();
+                break;
+            case "VIEW_ROLES":
+                viewRoles();
+                break;
+            case "ADD_EMPLOYEE":
+                addEmployee();
+                break;
+            case "ADD_DEPARTMENT":
+                addDepartment();
+                break;
+            case "UPDATE_EMPLOYEE":
+                updateEmployee();
+                break;
 
+            default:
+                exitCycle();
+        }
     })
-
 }
+
+
 
 //conditional statement here - call corresponding function
 
@@ -56,8 +78,9 @@ function mainMenu() {
 //    console.table(employees);
 //}
 
+
 function viewEmployees() {
-    db.findEmployees()
+    db.findEmployee()
     .then(([rows]) => {
         let employees = rows;
         console.log("\n");
@@ -82,6 +105,36 @@ function viewRoles() {
         console.table(roles)
     })
     .then(() => mainMenu());
+}
+
+function addEmployee() {
+    db.findEmployee()
+    .then(([rows]) => {
+        let employee = rows;
+        const newEmployee = employee.map(({ first_Name, last_Name, occupation }) => ({
+            name: `${first_Name} ${last_Name}`, 
+            value: occupation, 
+        }) ) 
+    })
+  
+    prompt ([
+        {
+            type: "input",
+            name: "first_Name",
+            message: "Please input employee first name?",
+        },
+        {
+            type: "input",
+            name: "last_Name",
+            message: "Please input employee last name?",
+        },
+        {
+            type: "list",
+            name: "occupation",
+            message: "Please choose an occupation",
+            choices: ["Legal", "Engineering", "Human Resources", "Warehouse"],
+        }
+    ])
 }
 
 

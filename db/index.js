@@ -19,6 +19,11 @@ class DB {
             `SELECT role.title, role.id, role.salary, role.department_id FROM role;`
         )
     }
+    createEmployee() {
+        return this.connection.promise().query(
+            `INSERT INTO employees first_Name, last_Name, occupation;`
+        )
+    }
 }
 
 module.exports = new DB(connection);
