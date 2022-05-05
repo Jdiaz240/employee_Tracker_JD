@@ -64,7 +64,7 @@ function mainMenu() {
                 break;
 
             default:
-                exitCycle();
+                quit();
         }
     })
 }
