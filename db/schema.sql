@@ -18,7 +18,7 @@ CREATE TABLE role (
     REFERENCES department(id)
 );
 
-CREATE TABLE employeee (
+CREATE TABLE employees (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(250) UNIQUE NOT NULL,
     last_name VARCHAR(250) UNIQUE NOT NULL,

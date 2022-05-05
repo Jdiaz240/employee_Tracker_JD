@@ -6,22 +6,22 @@ class DB {
     }
     findEmployee() {
         return this.connection.promise().query(
-            `SELECT employee.first_name, employee.last_name, employee.role_id, employee.salary FROM employee;`
+            "SELECT employee.first_name, employee.last_name, employee.role_id FROM employee",
         )
     }
     findDepartment() {
         return this.connection.promise().query(
-            `SELECT department.name, department.id FROM department;`
+            "SELECT department.name, department.id FROM department",
         )
     }
     findRoles() {
         return this.connection.promise().query(
-            `SELECT role.title, role.id, role.salary, role.department_id FROM role;`
+            "SELECT role.title, role.id, role.salary, role.department_id FROM role",
         )
     }
-    createEmployee() {
+    createEmployee(employee) {
         return this.connection.promise().query(
-            `INSERT INTO employees first_Name, last_Name, occupation;`
+            "INSERT INTO employee SET ?", employee 
         )
     }
 }

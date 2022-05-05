@@ -41,10 +41,11 @@ function mainMenu() {
             ]
         }
     ])
-    .then(function (answer) {
-        console.log(answer.choice);
-        switch(answer.choice) {
-            case "VIEW_EMPLOYEE":
+    .then (res => {
+        let choice = res.choice;
+        
+        switch(choice) {
+            case "VIEW_EMPLOYEES":
                 viewEmployees();
                 break;
             case "VIEW_DEPARTMENTS":
@@ -89,7 +90,7 @@ function viewEmployees() {
     .then(() => mainMenu());
 }
 function viewDepartments() {
-    db.findDepartments()
+    db.findDepartment()
     .then(([rows]) => {
         let departments = rows;
         console.log("\n");
@@ -111,9 +112,9 @@ function addEmployee() {
     db.findEmployee()
     .then(([rows]) => {
         let employee = rows;
-        const newEmployee = employee.map(({ first_Name, last_Name, occupation }) => ({
+        const newEmployee = employee.map(({ first_Name, last_Name, role_id }) => ({
             name: `${first_Name} ${last_Name}`, 
-            value: occupation, 
+            value: role_id, 
         }) ) 
     })
   
@@ -130,11 +131,26 @@ function addEmployee() {
         },
         {
             type: "list",
-            name: "occupation",
-            message: "Please choose an occupation",
-            choices: ["Legal", "Engineering", "Human Resources", "Warehouse"],
+            name: "role_id",
+            message: "Please choose a role?",
+            choices: [1, 2, 3, 4],
         }
     ])
+    .then (res=> {
+            let nameA = res.first_name;
+            let nameB = res.last_name;
+            let num = role_id;
+    })
+    .then  (res => {
+        let employee = {
+            first_name: nameA,
+            last_name: nameB,
+            role_id: num
+        }
+        .then (res => db.createEmployee(employee))
+    })
+    .then (() => mainMenu())
+
 }
 
 
