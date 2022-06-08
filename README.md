@@ -10,3 +10,5 @@ In this assignment, I created an employee tracker application that would allow t
 # Project Location:
 
 [Github Repo Link](https://github.com/Jdiaz240/employee_Tracker_JD)
+
+[Video Link](https://drive.google.com/file/d/1uUDyyJaD6-35QrMlYghAnxKXi_OQW8U-/view)
